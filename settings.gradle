@@ -1,1 +1,3 @@
 include ':app'
+include 'CoreLibs_superTask'
+project(':CoreLibs_superTask').projectDir = new File('./CoreLibs/super_task')
