@@ -1,4 +1,4 @@
-package com.ruoxu.supertask.utils;
+package net.ruoxu.utils;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.BlockingQueue;

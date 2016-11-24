@@ -1,9 +1,10 @@
-package com.ruoxu.supertask;
+package net.ruoxu;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
-import com.ruoxu.supertask.bean.MessageBean;
+import net.ruoxu.bean.MessageBean;
 
 /**
  * Created by wangli on 16/11/24.
@@ -19,11 +20,17 @@ public class ToggleHandler extends Handler {
         super.handleMessage(msg);
 
         MessageBean result = (MessageBean) msg.obj;
+        Log.d("ToggleHandler", "handleMessage");
         switch (msg.what) {
             case MESSAGE_POST_RESULT:
+                Log.d("ToggleHandler", "MESSAGE_POST_RESULT");
                 // There is only one result
-                result.mTask.finish(result);// 线程结束
+                result.mTask.finish();// 线程结束
                 break;
+            case MESSAGE_POST_PROGRESS:
+            
+                break; // TODO: 进度回调
+            
 
 
         }

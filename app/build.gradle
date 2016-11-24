@@ -33,6 +33,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile rootProject.ext.compileStr
+    compile  "com.android.support:appcompat-v7:23.0.0"
 
+    compile project(':CoreLibs_superTask')
 }

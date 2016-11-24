@@ -1,6 +1,6 @@
-package com.ruoxu.supertask.bean;
+package net.ruoxu.bean;
 
-import com.ruoxu.supertask.SuperTask;
+import net.ruoxu.SuperTask;
 
 /**
  * Created by wangli on 16/11/24.

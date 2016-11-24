@@ -1,4 +1,4 @@
-package com.ruoxu.supertask;
+package net.ruoxu;
 
 import android.os.Binder;
 import android.os.Handler;
@@ -6,8 +6,8 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 
-import com.ruoxu.supertask.bean.MessageBean;
-import com.ruoxu.supertask.utils.ExecutorUtils;
+import net.ruoxu.bean.MessageBean;
+import net.ruoxu.utils.ExecutorUtils;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
@@ -55,7 +55,14 @@ public  class SuperTask<Result> {
     }
 
 
-
+    private static Handler getHandler() {
+        synchronized (SuperTask.class) {
+            if (sHandler == null) {
+                sHandler = new ToggleHandler();
+            }
+            return sHandler;
+        }
+    }
 
 
     public SuperTask(CallBack callBack){
@@ -111,7 +118,7 @@ public  class SuperTask<Result> {
 
     }
 
-    public  Result doInBackgroud(){
+    private  Result doInBackgroud(){
 
         Result result = (Result) mCallBack.doInBackgroud();
         return result;
@@ -140,6 +147,8 @@ public  class SuperTask<Result> {
     }
 
     public void finish() {
+        //UI线程
+
         boolean isCancelled = mCancelled.get();
         if (isCancelled) {
             mCallBack.cancel();
@@ -159,14 +168,6 @@ public  class SuperTask<Result> {
 
 
 
-    private static Handler getHandler() {
-        synchronized (SuperTask.class) {
-            if (sHandler == null) {
-                sHandler = new ToggleHandler();
-            }
-            return sHandler;
-        }
-    }
 
 
 

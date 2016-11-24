@@ -1,4 +1,4 @@
-package com.ruoxu.supertask;
+package net.ruoxu;
 
 /**
  * Created by wangli on 16/11/24.

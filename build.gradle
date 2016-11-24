@@ -29,13 +29,13 @@ ext {
     compileSdkVersion = 23
     buildToolsVersion = "23.0.2"
 
-    applicationId = "com.ruoxu.supertask"
+    applicationId = "com.wl.supertask"
     minSdkVersion = 11
     targetSdkVersion = 15
     versionCode = 1
     versionName = "1.0"
 
-    compileStr = "com.android.support:appcompat-v7:23.0.0"
+
 
 
 }
