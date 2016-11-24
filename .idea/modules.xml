@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CoreLibs/super_task/CoreLibs_superTask.iml" filepath="$PROJECT_DIR$/CoreLibs/super_task/CoreLibs_superTask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Demo/sample/Demo_sample.iml" filepath="$PROJECT_DIR$/Demo/sample/Demo_sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/SuperTask.iml" filepath="$PROJECT_DIR$/SuperTask.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

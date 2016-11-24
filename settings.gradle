@@ -1,3 +1,8 @@
 include ':app'
 include 'CoreLibs_superTask'
 project(':CoreLibs_superTask').projectDir = new File('./CoreLibs/super_task')
+
+
+//测试文件
+include 'Demo_sample'
+project(':Demo_sample').projectDir = new File('./Demo/sample')
