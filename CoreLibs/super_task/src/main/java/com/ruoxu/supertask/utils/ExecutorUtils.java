@@ -32,12 +32,15 @@ public class ExecutorUtils {
         }
     };
 
-
     //构建一个线程池
     public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
 
+
     //构建一个串行线程池（SerialExecutor按其作用来讲，并不能算是一个真正的线程池，仅仅间接调用--> THREAD_POOL_EXECUTOR来执行线程）
     public static final Executor SERIAL_EXECUTOR = new SerialExecutor();
+
+    //默认线程池 SERIAL_EXECUTOR
+    private static volatile Executor sDefaultExecutor = SERIAL_EXECUTOR;
 
 
 
@@ -86,6 +89,22 @@ public class ExecutorUtils {
     public static Executor executor(){
         return SERIAL_EXECUTOR;
     }
+
+    /**
+     *
+     */
+
+    /**
+     * @return 返回默认线程池
+     */
+
+    public static Executor defaultExecutor(){
+        return sDefaultExecutor;
+    }
+
+
+
+
 
 
 

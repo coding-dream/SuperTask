@@ -6,6 +6,9 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 
+import com.ruoxu.supertask.bean.MessageBean;
+import com.ruoxu.supertask.utils.ExecutorUtils;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -15,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by wangli on 16/11/24.
  */
-public abstract class SuperTask<Result> {
+public  class SuperTask<Result> {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -35,7 +38,30 @@ public abstract class SuperTask<Result> {
 
     private final FutureTask<Result> mFuture;  //泛型Result是Callable创建的线程返回的结果
 
-    public SuperTask(){
+
+    private CallBack mCallBack;
+
+
+
+    public interface CallBack<T> {
+
+        void before();//UI
+        T doInBackgroud(); //线程执行
+        void after();//UI
+
+        void cancel();
+
+
+    }
+
+
+
+
+
+    public SuperTask(CallBack callBack){
+        this.mCallBack = callBack;
+
+
         mFuture = new FutureTask<Result>(new Callable<Result>() {
             @Override
             public Result call() throws Exception {
@@ -79,13 +105,57 @@ public abstract class SuperTask<Result> {
     }
 
     private void sendMsgToUIThread(Result result) {
-//        Message message = getHandler().obtainMessage(MESSAGE_POST_RESULT, new AsyncTaskResult<Result>(this, result));
-//        message.sendToTarget();
+        MessageBean messageBean = new MessageBean(this);
+        Message message = getHandler().obtainMessage(MESSAGE_POST_RESULT, messageBean);
+        message.sendToTarget();
 
     }
 
-    public abstract Result doInBackgroud(); //交给子类实现
+    public  Result doInBackgroud(){
 
+        Result result = (Result) mCallBack.doInBackgroud();
+        return result;
+    };
+
+    public final SuperTask execute() {
+
+        if (mStatus != Status.PENDING) {
+
+            switch (mStatus) {
+                case RUNNING:
+                    throw new IllegalStateException("Cannot execute task: the task is already running.");
+                case FINISHED:
+                    throw new IllegalStateException("Cannot execute task: the task has already been executed (a task can be executed only once)");
+            }
+        }
+
+        mStatus = Status.RUNNING;
+
+        mCallBack.before();
+
+        ExecutorUtils.defaultExecutor().execute(mFuture);
+
+        return this;
+
+    }
+
+    public void finish() {
+        boolean isCancelled = mCancelled.get();
+        if (isCancelled) {
+            mCallBack.cancel();
+        } else {
+            mCallBack.after();
+        }
+        mStatus = Status.FINISHED;
+
+
+    }
+
+
+    public final boolean cancel(boolean mayInterruptIfRunning) {
+        mCancelled.set(true);  //设置标志位 取消Task
+        return mFuture.cancel(mayInterruptIfRunning);
+    }
 
 
 
