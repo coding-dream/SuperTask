@@ -36,11 +36,11 @@ public class ExecutorUtils {
     //构建一个线程池
     public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
 
-
+    //构建一个串行线程池（SerialExecutor按其作用来讲，并不能算是一个真正的线程池，仅仅间接调用--> THREAD_POOL_EXECUTOR来执行线程）
     public static final Executor SERIAL_EXECUTOR = new SerialExecutor();
 
 
-    //构建一个串行线程池（SerialExecutor按其作用来讲，并不能算是一个真正的线程池，仅仅间接调用--> THREAD_POOL_EXECUTOR来执行线程）
+
     private static class SerialExecutor implements Executor {
         final ArrayDeque<Runnable> mTasks = new ArrayDeque<Runnable>();
         Runnable mActive;
@@ -48,13 +48,16 @@ public class ExecutorUtils {
         public synchronized void execute(final Runnable r) {
             mTasks.offer(new Runnable() {
                 public void run() {
+                   // ===========
                     try {
                         r.run();
                     } finally {
-                        scheduleNext();
+                        scheduleNext(); //递归
                     }
+                    // ========= // 这里的方法只有 THREAD_POOL_EXECUTOR.execute(mActive)时候才会执行
                 }
             });
+
             if (mActive == null) {
                 scheduleNext();
             }
@@ -62,7 +65,7 @@ public class ExecutorUtils {
 
         protected synchronized void scheduleNext() {
             if ((mActive = mTasks.poll()) != null) {
-                THREAD_POOL_EXECUTOR.execute(mActive);  //
+                THREAD_POOL_EXECUTOR.execute(mActive);  //执行线程
             }
         }
     }
@@ -70,13 +73,19 @@ public class ExecutorUtils {
 
 
     /**
-     * 返回一个可用的线程池
-     * @return
+     * @return 返回一个可用的线程池
      */
     public static Executor pool_executor(){
         return THREAD_POOL_EXECUTOR;
     }
 
+    /**
+     *
+     * @return 返回一个串行串行线程池(利用队列ArrayDeque)
+     */
+    public static Executor executor(){
+        return SERIAL_EXECUTOR;
+    }
 
 
 
