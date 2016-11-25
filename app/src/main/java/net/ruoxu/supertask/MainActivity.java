@@ -6,8 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import net.ruoxu.SuperClient;
+import net.ruoxu.bean.Request;
 import net.ruoxu.inter.CallBack;
 import net.ruoxu.SuperTask;
+
+import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void execute(View view) {
+    public void execute1(View view) {
 
         SuperTask superTask = new SuperTask(new CallBack() {
             @Override
@@ -49,6 +53,60 @@ public class MainActivity extends AppCompatActivity {
         superTask.execute();
 
 //        superTask.cancel(true);
+
+    }
+
+
+    public void execute2(View view) {
+        Request.Builder builder = new Request.Builder().task(new SuperTask(new CallBack() {
+            @Override
+            public void before() {
+
+            }
+
+            @Override
+            public void doInBackgroud() {
+
+            }
+
+            @Override
+            public void after() {
+
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        }));
+
+
+        Request request = builder.build();
+
+        SuperClient superClient = null;
+        superClient.newCall(request).enqueue(new CallBack() {
+            @Override
+            public void before() {
+
+            }
+
+            @Override
+            public void doInBackgroud() {
+
+            }
+
+            @Override
+            public void after() {
+
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        });
+
+
 
 
     }

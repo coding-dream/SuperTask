@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,8 +11,13 @@
     tools:context="net.ruoxu.supertask.MainActivity">
 
     <Button
-        android:onClick="execute"
+        android:onClick="execute1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="execute" />
-</RelativeLayout>
+        android:text="execute1" />
+    <Button
+        android:onClick="execute2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="execute2" />
+</LinearLayout>

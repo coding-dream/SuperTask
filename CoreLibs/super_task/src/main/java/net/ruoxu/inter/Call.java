@@ -10,7 +10,6 @@ import java.io.IOException;
  */
 public interface Call {
     Request request();
-    Response response();
     void enqueue(CallBack responseCallback);
     void cancel();
     boolean isCanceled();

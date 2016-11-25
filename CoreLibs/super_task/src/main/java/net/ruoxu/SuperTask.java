@@ -6,6 +6,7 @@ import android.os.Message;
 import android.os.Process;
 
 import net.ruoxu.bean.MessageBean;
+import net.ruoxu.bean.Request;
 import net.ruoxu.inter.CallBack;
 import net.ruoxu.utils.ExecutorFactory;
 
@@ -30,6 +31,7 @@ public  class SuperTask {
     private final FutureTask<Void> mFuture;  //泛型Void是Callable创建的线程返回的结果,这里弃用
 
     private CallBack mCallBack;
+
 
     private static Handler getHandler() {
         synchronized (SuperTask.class) {
@@ -100,8 +102,8 @@ public  class SuperTask {
 
     public void finish() {
         //UI线程
-        boolean isCancelled = mCancelled.get();
-        if (isCancelled) {
+
+        if (isCancelled()) {
             mCallBack.cancel();
         } else {
             mCallBack.after();
@@ -109,6 +111,10 @@ public  class SuperTask {
         mStatus = Status.FINISHED;
 
 
+    }
+
+    public boolean isCancelled() {
+        return mCancelled.get();
     }
 
 

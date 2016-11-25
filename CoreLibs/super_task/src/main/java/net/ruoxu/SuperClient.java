@@ -9,9 +9,11 @@ import net.ruoxu.inter.Call;
 public class SuperClient implements Call.Factory {
 
 
+
     @Override
     public Call newCall(Request request) {
-
-        return null;
+        return new RealCall(this,request);
     }
+
+
 }
