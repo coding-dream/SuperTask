@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import net.ruoxu.CallBack;
+import net.ruoxu.inter.CallBack;
 import net.ruoxu.SuperTask;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
     }
 
     public void execute(View view) {
@@ -34,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by wangli on 16/11/24.
  */
-public class ExecutorUtils {
+public class ExecutorFactory {
 
 
     private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
@@ -102,11 +102,5 @@ public class ExecutorUtils {
     public static Executor defaultExecutor(){
         return sDefaultExecutor;
     }
-
-
-
-
-
-
 
 }

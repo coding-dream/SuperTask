@@ -6,7 +6,8 @@ import android.os.Message;
 import android.os.Process;
 
 import net.ruoxu.bean.MessageBean;
-import net.ruoxu.utils.ExecutorUtils;
+import net.ruoxu.inter.CallBack;
+import net.ruoxu.utils.ExecutorFactory;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
@@ -22,12 +23,10 @@ public  class SuperTask {
     private static final int MESSAGE_POST_PROGRESS = 0x2;
     private static Handler sHandler;
 
-    private final AtomicBoolean mCancelled = new AtomicBoolean(); //是否取消了任务
-    private final AtomicBoolean mTaskInvoked = new AtomicBoolean(); //任务是否被成功调用
+    private final AtomicBoolean mCancelled = new AtomicBoolean();
+    private final AtomicBoolean mTaskInvoked = new AtomicBoolean();
 
-
-    private volatile Status mStatus = Status.PENDING; //默认状态，等待
-
+    private volatile Status mStatus = Status.PENDING;
     private final FutureTask<Void> mFuture;  //泛型Void是Callable创建的线程返回的结果,这里弃用
 
     private CallBack mCallBack;
@@ -93,7 +92,7 @@ public  class SuperTask {
 
         mCallBack.before();
 
-        ExecutorUtils.defaultExecutor().execute(mFuture);
+        ExecutorFactory.defaultExecutor().execute(mFuture);
 
         return this;
 
@@ -117,6 +116,5 @@ public  class SuperTask {
         mCancelled.set(true);  //设置标志位 取消Task
         return mFuture.cancel(mayInterruptIfRunning);
     }
-
 
 }

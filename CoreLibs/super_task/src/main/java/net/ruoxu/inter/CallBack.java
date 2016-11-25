@@ -1,4 +1,4 @@
-package net.ruoxu;
+package net.ruoxu.inter;
 
 public interface CallBack {
 
