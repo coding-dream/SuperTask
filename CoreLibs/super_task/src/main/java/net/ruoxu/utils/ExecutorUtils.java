@@ -1,5 +1,7 @@
 package net.ruoxu.utils;
 
+import android.util.Log;
+
 import java.util.ArrayDeque;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
@@ -49,15 +51,14 @@ public class ExecutorUtils {
         Runnable mActive;
 
         public synchronized void execute(final Runnable r) {
+
             mTasks.offer(new Runnable() {
                 public void run() {
-                   // ===========
                     try {
                         r.run();
                     } finally {
-                        scheduleNext(); //递归
+                        scheduleNext();
                     }
-                    // ========= // 这里的方法只有 THREAD_POOL_EXECUTOR.execute(mActive)时候才会执行
                 }
             });
 
@@ -68,7 +69,7 @@ public class ExecutorUtils {
 
         protected synchronized void scheduleNext() {
             if ((mActive = mTasks.poll()) != null) {
-                THREAD_POOL_EXECUTOR.execute(mActive);  //执行线程
+                THREAD_POOL_EXECUTOR.execute(mActive);
             }
         }
     }

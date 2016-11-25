@@ -1,12 +1,11 @@
 package net.ruoxu.supertask;
 
-import android.os.AsyncTask;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 
 import net.ruoxu.SuperTask;
 
@@ -32,14 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public String doInBackgroud() {
-                try {
-                    Thread.sleep(2000);
-                    Log.d("MainActivity", "doInBackgournd");
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+                Log.d("MainActivity", "doInBackgournd");
                 return "hello";
             }
 
@@ -55,5 +47,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         superTask.execute();
+
+        try {
+            Thread.sleep(1000);
+            superTask.cancel(true);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

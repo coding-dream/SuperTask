@@ -73,10 +73,9 @@ public  class SuperTask<Result> {
         mFuture = new FutureTask<Result>(new Callable<Result>() {
             @Override
             public Result call() throws Exception {
-
                 mTaskInvoked.set(true);
                 Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-                //noinspection unchecked
+
                 Result result = doInBackgroud();
                 Binder.flushPendingCommands();
 
@@ -88,11 +87,12 @@ public  class SuperTask<Result> {
             @Override
             protected void done() {
                 try {
-                    boolean wasTaskInvoked = mTaskInvoked.get();
-                    if (!wasTaskInvoked) {
-                        sendMsgToUIThread(mFuture.get()); // TODO: =====>
-                    }
+                    boolean wasTaskInvoked = mTaskInvoked.get();  // TODO: 16/11/25 nothing to do
+                    Log.d("SuperTask", "wasTaskInvoked:" + wasTaskInvoked);
 
+                    if (!wasTaskInvoked) {
+                        sendMsgToUIThread(mFuture.get());
+                    }
 
                 } catch (InterruptedException e) {
                     Log.d(TAG, "e:" + e);
@@ -101,7 +101,7 @@ public  class SuperTask<Result> {
                     throw new RuntimeException("An error occurred while executing doInBackground()",e.getCause());
 
                 } catch (CancellationException e) {
-
+                    Log.d(TAG, "e:" + e);
                     boolean wasTaskInvoked = mTaskInvoked.get();
                     if (!wasTaskInvoked) {
                         sendMsgToUIThread(null);
