@@ -20,10 +20,8 @@ public class ToggleHandler extends Handler {
         super.handleMessage(msg);
 
         MessageBean result = (MessageBean) msg.obj;
-        Log.d("ToggleHandler", "handleMessage");
         switch (msg.what) {
             case MESSAGE_POST_RESULT:
-                Log.d("ToggleHandler", "MESSAGE_POST_RESULT");
                 // There is only one result
                 result.mTask.finish();// 线程结束
                 break;

@@ -68,6 +68,7 @@ public  class SuperTask<Result> {
     public SuperTask(CallBack callBack){
         this.mCallBack = callBack;
 
+        getHandler();//确保handler在UI线程创建，SuperTask必须在UI线程创建
 
         mFuture = new FutureTask<Result>(new Callable<Result>() {
             @Override
