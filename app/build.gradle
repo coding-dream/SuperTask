@@ -33,9 +33,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile  "com.android.support:appcompat-v7:23.0.0"
+    compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
-
-//    compile project(':CoreLibs_superTask')
-    compile 'com.github.wangli0:CoreLibs_superTask:v1.0'
+    compile project(':super_task')
 }
