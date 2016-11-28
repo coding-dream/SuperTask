@@ -6,11 +6,11 @@ import android.os.Message;
 import android.os.Process;
 
 import net.ruoxu.bean.MessageBean;
-import net.ruoxu.bean.Request;
 import net.ruoxu.inter.CallBack;
 import net.ruoxu.utils.ExecutorFactory;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 

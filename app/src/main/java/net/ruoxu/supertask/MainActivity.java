@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import net.ruoxu.SuperClient;
+import net.ruoxu.SuperTask;
 import net.ruoxu.bean.Request;
 import net.ruoxu.inter.CallBack;
-import net.ruoxu.SuperTask;
 
 import okhttp3.OkHttpClient;
 
