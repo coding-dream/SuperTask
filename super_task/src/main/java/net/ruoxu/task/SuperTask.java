@@ -45,7 +45,7 @@ public  class SuperTask {
     }
 
 
-    public static SuperTask defaultTask() {
+    public static SuperTask create() {
         return new SuperTask();
     }
 

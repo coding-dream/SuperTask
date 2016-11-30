@@ -10,7 +10,7 @@ import net.ruoxu.task.inter.CallBack;
 public class Dispatcher {
 
     private static Dispatcher instance;
-    //分配任务
+
     public static Dispatcher getInstance() {
         if (instance == null) {
             synchronized (Dispatcher.class) {

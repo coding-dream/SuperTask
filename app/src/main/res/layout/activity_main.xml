@@ -11,13 +11,31 @@
     tools:context="net.ruoxu.supertask.MainActivity">
 
     <Button
+        android:id="@+id/execute1"
         android:onClick="execute1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="execute1" />
+        android:text="方式一" />
     <Button
+        android:id="@+id/execute2"
         android:onClick="execute2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="execute2" />
+        android:text="方式二" />
+
+    <Button
+        android:id="@+id/cancel_action1"
+        android:text="Cancel1"
+        android:onClick="cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/cancel_action2"
+        android:text="Cancel2"
+        android:onClick="cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>

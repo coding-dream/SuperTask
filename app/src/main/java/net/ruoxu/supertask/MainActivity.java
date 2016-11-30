@@ -10,9 +10,13 @@ import net.ruoxu.task.SuperClient;
 import net.ruoxu.task.SuperTask;
 import net.ruoxu.task.bean.Request;
 import net.ruoxu.task.bean.Response;
+import net.ruoxu.task.bean.TestBean;
+import net.ruoxu.task.inter.Call;
 import net.ruoxu.task.inter.CallBack;
 
 public class MainActivity extends AppCompatActivity {
+    SuperTask currentTask ; //用于演示取消 execute1
+    Call currentCall;       //用于演示取消 execute2
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,21 +55,22 @@ public class MainActivity extends AppCompatActivity {
             }
         },null); //此种暂不支持Request参数形式
 
+
         superTask.execute();
 
-//        superTask.cancel(true);
+        currentTask = superTask;
 
     }
 
-    //request 和 callback的问题
     public void execute2(View view) {
-        Request.Builder builder = new Request.Builder().task(SuperTask.defaultTask());
+        SuperTask superTask = SuperTask.create();
+        TestBean testBean = new TestBean("zhangdong","20");
+        Request request = new Request.Builder().task(superTask).params(testBean).build();
 
-        Request request = builder.build();
+        SuperClient superClient = SuperClient.getInstance();
+        Call call = superClient.newCall(request);
 
-        SuperClient superClient = new SuperClient();
-
-        superClient.newCall(request).enqueue(new CallBack() {
+        call.enqueue(new CallBack() {
             @Override
             public void before() {
                 Toast.makeText(MainActivity.this, "----> before", Toast.LENGTH_SHORT).show();
@@ -74,11 +79,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Response doInBackgroud(Request request) {
                 try {
+
                     Log.d("MainActivity", "----> doInBackgournd start");
 
                     Thread.sleep(5000);
-                    Response response = new Response("xiaoming");
+                    TestBean bean = request.params(TestBean.class);
 
+                    Response response = new Response(bean.getName());
 
                     Log.d("MainActivity", "----> doInBackgournd end");
 
@@ -105,8 +112,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        currentCall = call;
 
 
+    }
 
+
+    public void cancel(View view) {
+        switch (view.getId()) {
+            case R.id.cancel_action1:
+                currentTask.cancel(true);
+                break;
+            case R.id.cancel_action2:
+                currentCall.cancel();
+                break;
+        }
     }
 }
