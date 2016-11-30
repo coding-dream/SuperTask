@@ -35,5 +35,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.0'
     // change 从远程仓库编译
-    compile 'com.github.wangli0:SuperTask:v1.1'
+    compile 'com.github.wangli0:SuperTask:v0.3'
 }
