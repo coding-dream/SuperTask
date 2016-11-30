@@ -54,7 +54,7 @@ public  class SuperTask {
 
     public SuperTask(){
         this(null,null);
-        Log.d("SuperTask", "create a new task");
+        Log.d(TAG, "create a new task");
     }
 
     public SuperTask(CallBack callBack,  Request request){

@@ -34,6 +34,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile project(':super_task')
+    // change 从远程仓库编译
+    compile 'com.github.wangli0:super_task:v1.0'
 }
