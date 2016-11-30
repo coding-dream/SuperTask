@@ -3,12 +3,16 @@ package net.ruoxu.task.bean;
 /**
  * Created by Administrator on 2016/11/25.
  */
-public class Response {
+public class Response{
 
-    public String name;
+    private Object t;
 
-    public Response(String name){
-        this.name = name;
+    public void params(Object object){
+        this.t = object;
+    }
+
+    public <T> T params(Class<T> clazz){
+        return (T) t;
     }
 
 

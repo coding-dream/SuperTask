@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void execute2(View view) {
         SuperTask superTask = SuperTask.create();
-        TestBean testBean = new TestBean("zhangdong","20");
+        TestBean testBean = new TestBean(" sister","20"); //这里可以是任意请求参数对象
         Request request = new Request.Builder().task(superTask).params(testBean).build();
 
         SuperClient superClient = SuperClient.getInstance();
@@ -82,10 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.d("MainActivity", "----> doInBackgournd start");
 
-                    Thread.sleep(5000);
+                    Thread.sleep(3000);
                     TestBean bean = request.params(TestBean.class);
 
-                    Response response = new Response(bean.getName());
+                    Response response = new Response();
+                    response.params("I love you "+bean.getName());
 
                     Log.d("MainActivity", "----> doInBackgournd end");
 
@@ -100,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void after(Response response) {
                 if (response != null) {
-                    Toast.makeText(MainActivity.this, "----> after response:"+response.name, Toast.LENGTH_SHORT).show();
+                    String msg = response.params(String.class);
+
+                    Toast.makeText(MainActivity.this, "----> after response:"+msg, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -121,10 +124,15 @@ public class MainActivity extends AppCompatActivity {
     public void cancel(View view) {
         switch (view.getId()) {
             case R.id.cancel_action1:
-                currentTask.cancel(true);
+                if (currentTask != null) {
+                    currentTask.cancel(true);
+                }
                 break;
             case R.id.cancel_action2:
-                currentCall.cancel();
+                if (currentCall != null) {
+                    currentCall.cancel();
+
+                }
                 break;
         }
     }

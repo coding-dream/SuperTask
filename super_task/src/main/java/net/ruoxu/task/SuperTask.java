@@ -4,6 +4,9 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+import android.util.Log;
+
+import com.ruoxu.supertask.BuildConfig;
 
 import net.ruoxu.task.bean.MessageBean;
 import net.ruoxu.task.bean.Request;
@@ -51,9 +54,11 @@ public  class SuperTask {
 
     public SuperTask(){
         this(null,null);
+        Log.d("SuperTask", "create a new task");
     }
 
     public SuperTask(CallBack callBack,  Request request){
+
         if (callBack != null) {
             this.mCallBack = callBack;
         }
