@@ -6,8 +6,6 @@ import android.os.Message;
 import android.os.Process;
 import android.util.Log;
 
-import com.ruoxu.supertask.BuildConfig;
-
 import net.ruoxu.task.bean.MessageBean;
 import net.ruoxu.task.bean.Request;
 import net.ruoxu.task.bean.Response;

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ruoxu.supertask">
+    package="net.ruoxu.task">
 
     <application
         android:allowBackup="true"
