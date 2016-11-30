@@ -1,6 +1,4 @@
-package net.ruoxu.utils;
-
-import android.util.Log;
+package net.ruoxu.task.utils;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.BlockingQueue;

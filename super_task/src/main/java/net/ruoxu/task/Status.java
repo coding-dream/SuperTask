@@ -1,4 +1,4 @@
-package net.ruoxu;
+package net.ruoxu.task;
 
 /**
  * Created by wangli on 16/11/24.

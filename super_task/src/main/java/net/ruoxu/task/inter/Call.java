@@ -1,9 +1,6 @@
-package net.ruoxu.inter;
+package net.ruoxu.task.inter;
 
-import net.ruoxu.bean.Request;
-import net.ruoxu.bean.Response;
-
-import java.io.IOException;
+import net.ruoxu.task.bean.Request;
 
 /**
  * Created by Administrator on 2016/11/25.

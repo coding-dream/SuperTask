@@ -1,16 +1,17 @@
-package net.ruoxu;
+package net.ruoxu.task;
 
 import android.os.Binder;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 
-import net.ruoxu.bean.MessageBean;
-import net.ruoxu.inter.CallBack;
-import net.ruoxu.utils.ExecutorFactory;
+import net.ruoxu.task.bean.MessageBean;
+import net.ruoxu.task.bean.Request;
+import net.ruoxu.task.bean.Response;
+import net.ruoxu.task.inter.CallBack;
+import net.ruoxu.task.utils.ExecutorFactory;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -31,6 +32,7 @@ public  class SuperTask {
     private final FutureTask<Void> mFuture;  //泛型Void是Callable创建的线程返回的结果,这里弃用
 
     private CallBack mCallBack;
+    private Request mRequest;
 
 
     private static Handler getHandler() {
@@ -43,8 +45,22 @@ public  class SuperTask {
     }
 
 
-    public SuperTask(CallBack callBack){
-        this.mCallBack = callBack;
+    public static SuperTask defaultTask() {
+        return new SuperTask();
+    }
+
+    public SuperTask(){
+        this(null,null);
+    }
+
+    public SuperTask(CallBack callBack,  Request request){
+        if (callBack != null) {
+            this.mCallBack = callBack;
+        }
+        if (request != null) {
+            this.mRequest = request;
+        }
+
 
         getHandler();//确保handler在UI线程创建，SuperTask必须在UI线程创建
 
@@ -54,25 +70,29 @@ public  class SuperTask {
                 mTaskInvoked.set(true);
                 Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 
-                mCallBack.doInBackgroud();
+                Response response = mCallBack.doInBackgroud(mRequest);
+
                 Binder.flushPendingCommands();
-                sendMsgToUIThread();
+                sendMsgToUIThread(response);
                 return null;  //这个返回结果 仅用于 done()方法 mFuture.get()获取
             }
         }){
             @Override
             protected void done() {
-               boolean wasTaskInvokedValue = mTaskInvoked.get();
+                boolean wasTaskInvokedValue = mTaskInvoked.get();
                 if (!wasTaskInvokedValue) { // mTaskInvoked.set(true);未调用即被cancel掉
-                    sendMsgToUIThread();
+                    sendMsgToUIThread(null);
                 }
 
             }
         };
     }
 
-    private void sendMsgToUIThread() {
-        MessageBean messageBean = new MessageBean(this);
+
+
+    private void sendMsgToUIThread(Response response) {
+
+        MessageBean messageBean = new MessageBean(this,response);
         Message message = getHandler().obtainMessage(MESSAGE_POST_RESULT, messageBean);
         message.sendToTarget();
 
@@ -100,14 +120,15 @@ public  class SuperTask {
 
     }
 
-    public void finish() {
+    public void finish(Response response) {
         //UI线程
 
         if (isCancelled()) {
             mCallBack.cancel();
         } else {
-            mCallBack.after();
+            mCallBack.after(response);
         }
+
         mStatus = Status.FINISHED;
 
 
@@ -122,5 +143,14 @@ public  class SuperTask {
         mCancelled.set(true);  //设置标志位 取消Task
         return mFuture.cancel(mayInterruptIfRunning);
     }
+
+
+    public void callback(CallBack responseCallback) {
+        this.mCallBack = responseCallback;
+    }
+    public void request(Request request){
+        this.mRequest = request;
+    }
+
 
 }

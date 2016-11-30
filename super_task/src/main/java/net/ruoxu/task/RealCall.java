@@ -1,8 +1,8 @@
-package net.ruoxu;
+package net.ruoxu.task;
 
-import net.ruoxu.bean.Request;
-import net.ruoxu.inter.Call;
-import net.ruoxu.inter.CallBack;
+import net.ruoxu.task.bean.Request;
+import net.ruoxu.task.inter.Call;
+import net.ruoxu.task.inter.CallBack;
 
 /**
  * Created by Administrator on 2016/11/25.
@@ -25,8 +25,7 @@ public class RealCall implements Call {
 
     @Override
     public void enqueue(CallBack responseCallback) {
-//        mSuperClient.dispatcher().executed(this); // TODO: 2016/11/26 todo
-        
+        mSuperClient.dispatcher().executeTask(this,responseCallback);
     }
 
     @Override

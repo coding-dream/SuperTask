@@ -1,10 +1,9 @@
-package net.ruoxu;
+package net.ruoxu.task;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
-import net.ruoxu.bean.MessageBean;
+import net.ruoxu.task.bean.MessageBean;
 
 /**
  * Created by wangli on 16/11/24.
@@ -23,7 +22,7 @@ public class ToggleHandler extends Handler {
         switch (msg.what) {
             case MESSAGE_POST_RESULT:
                 // There is only one result
-                result.mTask.finish();// 线程结束
+                result.mTask.finish(result.response);// 线程结束
                 break;
             case MESSAGE_POST_PROGRESS:
             

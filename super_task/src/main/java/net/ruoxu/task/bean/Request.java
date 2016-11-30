@@ -1,6 +1,6 @@
-package net.ruoxu.bean;
+package net.ruoxu.task.bean;
 
-import net.ruoxu.SuperTask;
+import net.ruoxu.task.SuperTask;
 
 /**
  * Created by Administrator on 2016/11/25.
@@ -10,6 +10,7 @@ public class Request {
 
     public Request(Builder builder) {
         this.task = builder.task;
+
     }
 
 
@@ -20,6 +21,7 @@ public class Request {
 
     public static final class Builder{
         private SuperTask task ;
+
         public Builder task(SuperTask superTask) {
             task = superTask;
             return this;
